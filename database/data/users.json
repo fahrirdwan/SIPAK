@@ -1,0 +1,20 @@
+[
+    {
+        "id": 1,
+        "nip": "12345",
+        "name": "Admin",
+        "email": "admin@gmail.com",
+        "password": "$2a$12$aq7T9FyosL3j92DdUScaou2QiTZ2xvMYMNn5C0IafvdSol1yI0.y6",
+        "picture": "user.png",
+        "id_role": 1
+    },
+    {
+        "id": 2,
+        "nip": "23451",
+        "name": "Fahri Ridwan",
+        "email": "fahrii@gmail.com",
+        "password": "$2a$12$aq7T9FyosL3j92DdUScaou2QiTZ2xvMYMNn5C0IafvdSol1yI0.y6",
+        "picture": "user.png",
+        "id_role": 2
+    }
+]
