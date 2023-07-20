@@ -11,17 +11,18 @@
             </div> --}}
             <div class="card">
                 <div class="card-header">
-                  <h3 class="card-title">Data Pengembalian</h3>
+                  <h3 class="card-title">Data Yang Belum Kembalikan Aset</h3>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
                   <table id="example1" class="table table-bordered table-striped">
                     <thead>
                     <tr class="text-center">
+                        <th>No</th>
                         <th>Nama Karyawan</th>
                         <th>Serial Number</th>
-                        <th>Nama Barang</th>
-                        <th>Status pengembalian</th>
+                        <th>Nama Aset</th>
+                        <th>Status Pengembalian</th>
                         <th>Tanggal Pengembalian</th>
                         <th colspan="3">action</th>
                         <th style="display: none"></th> 
@@ -30,6 +31,7 @@
                     <tbody>
                         @foreach($pengembalian as $pmj)
                             <tr class="text-center">
+                                <td>{{ $loop->iteration }}</td>
                                 <td>{{ $pmj->name }}</td>
                                 <td>{{ $pmj->serial_number }}</td>
                                 <td>{{ $pmj->nama_barang.' '.$pmj->nomor_model }}</td>

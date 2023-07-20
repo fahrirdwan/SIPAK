@@ -11,7 +11,7 @@ class PeminjamanController extends Controller
     // 'GET' | Method untuk menampilkan halaman peminjaman barang
     public function index()
     {
-        $menu = 'Peminjaman';
+        $menu = 'Data Peminjaman';
         $cari = null;
         /**
          * $peminjaman untuk menampilkan data peminjaman
@@ -109,7 +109,7 @@ class PeminjamanController extends Controller
         ]);
 
         // Redirect ke halaman yang sama dan menampilkan notifikasi
-        return redirect()->back()->withToastSuccess('Berhasil approval peminjaman!');
+        return redirect()->back()->withToastSuccess('Berhasil melakukan persetujuan peminjaman!');
     }
 
     // 'GET' | Method untuk menampilkan halaman tambah peminjaman

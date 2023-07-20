@@ -10,7 +10,7 @@ class JenisBarangController extends Controller
     // 'GET' | Method untuk menampilkan halaman jenis barang
     public function jenis_barang() 
     {
-        $menu = 'Jenis Barang';
+        $menu = 'Jenis Aset';
         $barang = \DB::table('jenis_barang')
                         ->orderByDesc('id_jenis_barang')
                         ->get();

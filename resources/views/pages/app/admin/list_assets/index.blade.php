@@ -12,7 +12,7 @@
                     <table id="example1" class="table table-bordered table-striped">
                       <thead>
                         <tr class="text-center">
-                            <th>Nama Barang</th>
+                            <th>Nama Aset</th>
                             <th>Model</th>
                             <th>Serial Number</th>
                             <th>Jenis Aset</th>

@@ -12,7 +12,7 @@ class UserAccessController extends Controller
     // 'GET' | Method untuk menampilkan halaman user management
     public function index()
     {
-        $menu = 'User Access';
+        $menu = 'Data Karyawan';
         /** 
          * Menampilkan users dengan id lebih dari 1
          * Mengurutkan data terbaru

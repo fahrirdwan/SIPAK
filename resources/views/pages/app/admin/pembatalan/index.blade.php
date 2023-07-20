@@ -9,13 +9,13 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Data Peminjaman</h3>
+                    <h3 class="card-title">Data Peminjam</h3>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
                     <table id="example1" class="table table-bordered table-striped">
                         <thead>
-                            <tr>
+                            <tr  class="text-center">
                                 <th>Nama Karyawan</th>
                                 <th>Nama Barang</th>
                                 <th>Tanggal Peminjaman</th>
@@ -57,7 +57,7 @@
                 <div class="card-body">
                     <table id="example2" class="table table-bordered table-striped">
                         <thead>
-                            <tr>
+                            <tr  class="text-center">
                                 <th>Nama Karyawan</th>
                                 <th>Nama Barang</th>
                                 <th>Tanggal Pengembalian</th>

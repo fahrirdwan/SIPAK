@@ -8,7 +8,7 @@
         <div class="col-lg-6 mx-auto">
             <div class="card shadow" style="border-radius: 20px">
                 <div class="card-body p-4">
-                    <h4>Laporan Check Kondisi</h1><br>
+                    <h4>Laporan</h1><br>
                     <form action="/admin/download/laporan" method="POST">@csrf
                         <div class="row">
                             <div class="col-lg-6">

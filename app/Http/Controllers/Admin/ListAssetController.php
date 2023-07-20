@@ -15,7 +15,7 @@ class ListAssetController extends Controller
     // 'GET' | Method untuk menampilkan halaman list aset
     public function index() 
     {
-        $menu = 'Asset';
+        $menu = 'List Asset';
         $barang = \DB::table('barang')
                         ->orderByDesc('id_barang')
                         ->join('jenis_barang', 'jenis_barang.id_jenis_barang', '=', 'barang.id_jenis_barang')
@@ -43,7 +43,7 @@ class ListAssetController extends Controller
     // 'GET' | Method untuk menampilkan halaman tambah aset
     public function tambah_data()
     {
-        $menu = 'Asset';
+        $menu = 'Tambah Aset';
         $jenis_barang = \DB::table('jenis_barang')->get();
         // Halaman tambah aset di resources/views/pages/app/admin/list_assets/tambah_data
         return view('pages.app.admin.list_assets.tambah_data', compact('menu','jenis_barang'));

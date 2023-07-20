@@ -21,7 +21,7 @@ class LaporanController extends Controller
     // 'GET' | Method untuk menampilkan halaman laporan
     public function index() 
     {
-        $menu = 'Laporan';
+        $menu = 'Cetak Laporan';
         // Halaman laporan di resources/views/pages/app/admin/laporan/index
         return view('pages.app.admin.laporan.index', compact('menu'));
     }

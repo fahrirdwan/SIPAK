@@ -16,10 +16,12 @@ class CreateChatsTable extends Migration
         Schema::create('chats', function (Blueprint $table) {
             $table->increments('id_chat');
             $table->integer('session_chat');
-            $table->integer('nip_user');
+            $table->unsignedInteger('nip_user');
             $table->string('topic_chat', 128);
             $table->integer('linked_user');
             $table->timestamps();
+
+            $table->foreign('nip_user')->references('nip')->on('users');
         });
     }
 

@@ -15,10 +15,12 @@ class CreateMessagesTable extends Migration
     {
         Schema::create('messages', function (Blueprint $table) {
             $table->increments('id_message');
-            $table->integer('nip_user');
+            $table->unsignedInteger('nip_user');
             $table->integer('session_chat');
             $table->text('message');
             $table->timestamps();
+
+            $table->foreign('nip_user')->references('nip')->on('users');
         });
     }
 

@@ -4,10 +4,13 @@
 
 @section('content')
 <div class="container-fluid">
-    <a href="/admin/user-access/create" class="btn btn-primary mb-4">Tambah Akun</a>
-    <div class="row">
-      <div class="col-12">
+  <div class="row">
+    <div class="col-12">
+        <a href="/admin/user-access/create" class="btn btn-primary mb-4">Tambah Akun</a>
         <div class="card shadow p-3">
+          <div class="card-header">
+            <h3 class="card-title">Data Karyawan</h3>
+           </div>
           <div class="card-body">
             <table id="example1" class="table table-bordered table-striped">
               <thead>

@@ -56,8 +56,10 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
-                <div class="card-body">
-                    <h2 class="card-title">Tata Cara Peminjaman Aset Alat Kantor</h2><br>
+                <div class="card-header" style="font-family: 'Times New Roman', Times, serif;">
+                    <h3 class="card-title"><b>Tata Cara Mengajukan Peminjaman Aset</b></h3>
+                </div>
+                <font face="Times New Roman">
                     <ol>
                         <li>Klik menu Kategori aset dan pilih aset yang ingin digunakan atau juga bisa klik menu Peminjaman pada menu di samping kiri</li>
                         <li>Bila memesan aset melalui kategori aset, dapat langsung mengisi form peminjaman sesuai dengan kebutuhan dan lengkapi semua form yang belum terisi</li>
@@ -73,9 +75,11 @@
                         <li>Pada website ini, Anda juga dapat mengubah password default dengan password versi Anda, serta melengkapi profil Anda apabila profil Anda belum lengkap</li>
                         <li>Setelah selesai, Anda dapat logout pada fitur pojok kanan atas</li>
                     </ol>
-                </div>
+                </font>
             </div>
         </div>
     </div>
+    
+    
 </div>
 @endsection

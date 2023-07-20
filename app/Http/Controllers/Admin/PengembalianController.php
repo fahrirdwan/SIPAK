@@ -11,7 +11,7 @@ class PengembalianController extends Controller
     // 'GET' | Method untuk menampilkan halaman pengembalian barang
     public function index()
     {
-        $menu = 'Pengembalian';
+        $menu = 'Data Pengembalian';
         $cari = null;
         /**
          * $pengembalian untuk menampilkan data pengembalian
@@ -108,7 +108,7 @@ class PengembalianController extends Controller
                             ->update(['softDelete' => 0]);
 
         // Redirect ke halaman yang sama dan menampilkan notifikasi
-        return redirect('/admin/check-kondisi')->withToastSuccess('Berhasil approval pengembalian!');
+        return redirect('/admin/check-kondisi')->withToastSuccess('Berhasil melakukan persetujuan pengembalian!');
     }
 
     

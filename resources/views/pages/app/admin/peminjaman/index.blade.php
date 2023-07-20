@@ -10,16 +10,17 @@
             <a href="/admin/peminjaman/tambah" class="btn btn-primary mb-3">+ Tambah Data</a>
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Data Peminjaman</h3>
+                    <h3 class="card-title">Data Peminjam Aset</h3>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                    <table id="example1" class="table table-bordered table-striped">
+                    <table id="example1" data-order='[[0,"asc"]]' class="table table-bordered table-striped">
                         <thead>
                             <tr>
+                                <th>No</th>
                                 <th>Nama Karyawan</th>
                                 <th>Serial Number</th>
-                                <th>Nama Barang</th>
+                                <th>Nama Aset</th>
                                 <th>Durasi Peminjaman</th>
                                 <th>Status Peminjaman</th>
                                 <th>Tanggal Peminjaman</th>
@@ -31,6 +32,7 @@
                             @foreach($peminjaman as $pmj)
                             @if($pmj->status_peminjaman === 'Diproses')
                             <tr class="text-center">
+                                <td>{{ $loop->iteration }}</td>
                                 <td>{{ $pmj->name }}</td>
                                 <td>{{ $pmj->serial_number }}</td>
                                 <td>{{ $pmj->nama_barang.' '.$pmj->nomor_model }}</td>
@@ -66,7 +68,6 @@
                                     @elseif($pmj->confirmed === 0 && $pmj->status_barang === 0)
                                     -
                                     @else
-                                    
                                     @endif
                                 </td>
                                 <td class="text-center">

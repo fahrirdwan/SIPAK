@@ -10,17 +10,20 @@
                 <div class="card-body">
                     <form action="/admin/list-asset/tambah-data" method="POST" enctype="multipart/form-data">
                         @csrf
+                        
+                        <div class="form-group">
+                            <label for="nm_barang">Nama Aset</label> <br>
+                            <input id="nm_barang" type="text" name="nama_barang" class="form-control" value="{{ old('nama_barang') }}">
+                            @error('nama_barang')<p class="text-danger">{{ $message }}</p> @enderror
+                        </div>
+
                         <div class="form-group">
                             <label for="no_model">Model</label> <br>
                             <input id="no_model" type="text" name="nomor_model" class="form-control" value="{{ old('nomor_model') }}">
                             @error('nomor_model')<p class="text-danger">{{ $message }}</p> @enderror
                         </div>
                         
-                        <div class="form-group">
-                            <label for="nm_barang">Nama Barang</label> <br>
-                            <input id="nm_barang" type="text" name="nama_barang" class="form-control" value="{{ old('nama_barang') }}">
-                            @error('nama_barang')<p class="text-danger">{{ $message }}</p> @enderror
-                        </div>
+
                         <div class="form-group">
                             <label for="serial">Serial Number</label> <br>
                             <input id="serial" type="text" name="serial_number" class="form-control" value="{{ old('serial_number') }}">
@@ -28,7 +31,7 @@
                         </div>
                         
                         <div class="form-group">
-                            <label for="jn_barang">Jenis Barang</label> <br>
+                            <label for="jn_barang">Jenis Aset</label> <br>
                             <select name="id_jenis_barang" id="jn_barang" class="form-control">
                                 <option value="">Pilih</option>
                                 @foreach($jenis_barang as $jbg)
@@ -38,7 +41,7 @@
                             @error('id_jenis_barang')<p class="text-danger">{{ $message }}</p> @enderror
                         </div>
                         <div class="form-group">
-                            <label for="profil">Input Gambar Asset</label>
+                            <label for="profil">Input Gambar Aset</label>
                             <img class="img-fluid rounded mb-3" id="output" width="150" style="display: block" />
                             <input type="file" name="gambar" class="form-control" accept="image/*" id="file" onchange="loadFile(event)">
                             @error('gambar')<p class="text-danger">{{ $message }}</p> @enderror
@@ -50,7 +53,7 @@
                             </script>
                         </div>
                         <div class="mb-3">
-                            <label for="">Detail Barang</label>
+                            <label for="">Detail Aset</label>
                             <textarea id="editor1" name="detail">
                                 {{ old('detail') }}
                             </textarea>

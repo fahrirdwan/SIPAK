@@ -9,7 +9,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">History Aset</h3>
+                    <h3 class="card-title">Data history</h3>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
@@ -18,8 +18,9 @@
                             <tr class="text-center">
                                 <th>No</th>
                                 <th>Nama Karyawan</th>
-                                <th>Aset</th>
+                                <th>Nama Aset</th>
                                 <th>Jenis Aset</th>
+                                <th>Serial Number</th>
                                 <th>Tanggal Peminajam</th>
                                 <th>Tanggal Pengembalian</th>
                                 <th>Keterangan Aset</th>
@@ -32,8 +33,9 @@
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $history->name}}</td>
-                                    <td>{{ $history->nama_barang}}</td>
+                                    <td>{{ $history->nama_barang.' '.$history->nomor_model }} - {{ strip_tags(htmlspecialchars_decode($history->detail)) }}</td>
                                     <td>{{ $history->jenis_barang}}</td>
+                                    <td>{{ $history->serial_number }}</td>
                                     <td>{{ \Carbon\Carbon::parse($history->tgl_peminjaman)->locale('id')->isoFormat('dddd, D MMMM Y') }}</td>
                                     <td>{{ \Carbon\Carbon::parse($history->tgl_pengembalian)->locale('id')->isoFormat('dddd, D MMMM Y') }}</td>
                                     <td>{{ $history->kondisi_barang}}</td>

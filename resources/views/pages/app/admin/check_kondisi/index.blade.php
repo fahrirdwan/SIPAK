@@ -12,10 +12,10 @@
                       <thead>
                         <tr class="text-center">
                             <th>Nama Karyawan</th>
-                            <th>Barang</th>
+                            <th>Nama Aset</th>
                             <th>Serial Number</th>
-                            <th>Kondisi</th>
-                            <th>Digunakan</th>
+                            <th>Kondisi Aset</th>
+                            <th>Dipinjam</th>
                             <th>Dikembalikan</th>
                             <th colspan="3">Action</th>
                             <th style="display: none"></th> 
@@ -25,7 +25,7 @@
                         @foreach($check_kondisi as $check)
                         <tr class="text-center">
                             <td>{{ $check->name }}</td>
-                            <td>{{ $check->nama_barang }}</td>
+                            <td>{{ $check->nama_barang.' '.$check->nomor_model }}</td>
                             <td>{{ $check->serial_number }}</td>
                             <td>{{ $check->kondisi_barang }}</td>
                             <td>{{ \Carbon\Carbon::parse($check->created_at)->locale('id')->isoFormat('dddd, D MMMM Y') }}</td>

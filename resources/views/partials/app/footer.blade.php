@@ -51,10 +51,10 @@
 <script>
     $(function () {
       $("#example1").DataTable({
-        "responsive": true, "lengthChange": false, "autoWidth": false
+        "responsive": false, "lengthChange": false, "autoWidth": false
       })
       $("#example2").DataTable({
-        "responsive": true, "lengthChange": false, "autoWidth": false
+        "responsive": false, "lengthChange": false, "autoWidth": false
       })
     });
   </script>

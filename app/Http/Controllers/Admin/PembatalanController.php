@@ -9,7 +9,7 @@ class PembatalanController extends Controller
 {
     public function index()
     {
-        $menu='Pembatalan';
+        $menu='Data Pembatalan Transaksi';
         $peminjaman = \DB::table('peminjaman')
                             ->where('peminjaman.softDelete', 1)
                             ->orderBy('created_at')
@@ -78,7 +78,7 @@ class PembatalanController extends Controller
         ]);
 
         // Redirect ke halaman yang sama dan menampilkan notifikasi 
-        return redirect()->back()->withToastSuccess('Berhasil membatalkan approval peminjaman!');
+        return redirect()->back()->withToastSuccess('Berhasil membatalkan Persetujuan peminjaman!');
     }
 
     // 'GET' | Method untuk membatalkan persetujuan pengembalian barang
@@ -129,6 +129,6 @@ class PembatalanController extends Controller
         ]);        
 
         // Redirect ke halaman yang sama dan menampilkan notifikasi
-        return redirect()->back()->withToastSuccess('Berhasil membatalkan approval pengembalian!');
+        return redirect()->back()->withToastSuccess('Berhasil membatalkan Persetujuan pengembalian!');
     }
 }

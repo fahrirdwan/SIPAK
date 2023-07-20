@@ -20,7 +20,7 @@ class CheckKondisiController extends Controller
                             ->where('softDelete', 0)
                             ->join('users','users.nip','=','check_kondisi.nip')
                             ->join('barang','barang.id_barang','=','check_kondisi.id_barang')
-                            ->select('users.name','barang.nama_barang','barang.serial_number','check_kondisi.*')
+                            ->select('users.name','barang.nama_barang','barang.nomor_model','barang.serial_number','check_kondisi.*')
                             ->paginate(8);
         // Halaman check kondisi di resources/views/pages/app/admin/check_kondisi/index
         return view('pages.app.admin.check_kondisi.index', compact('menu','check_kondisi'));
@@ -70,7 +70,7 @@ class CheckKondisiController extends Controller
                             ->update(['softDelete' => 1]);
 
         // Redirect ke halaman check kondisi dan menampilkan notifikasi
-        return redirect('/admin/check-kondisi')->withToastSuccess('Berhasil menambahkan note check kondisi!');
+        return redirect('/admin/check-kondisi')->withToastSuccess('Berhasil menambahkan kondisi aset terbaru');
     }
     
     // 'GET' | Method untuk menghapus check kondisi berdasarkan id

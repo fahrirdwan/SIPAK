@@ -11,10 +11,16 @@
                     <form action="/admin/{{ $jenis_bg }}/tambah-data" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
+                            <label for="nm_barang">Nama Aset</label> <br>
+                            <input id="nm_barang" type="text" name="nama_barang" class="form-control">
+                            @error('nama_barang')<p class="text-danger">{{ $message }}</p> @enderror
+                        </div>
+
+                        <div class="form-group">
                             <label for="no_model">Model</label> <br>
                             <input id="no_model" type="text" name="nomor_model" class="form-control">
                             @error('nomor_model')<p class="text-danger">{{ $message }}</p> @enderror
-                        </div>
+                        </div>        
                         
                         <div class="form-group">
                             <label for="serial_number">Serial Number</label> <br>
@@ -22,14 +28,9 @@
                             @error('serial_number')<p class="text-danger">{{ $message }}</p> @enderror
                         </div>
 
-                        <div class="form-group">
-                            <label for="nm_barang">Nama Barang</label> <br>
-                            <input id="nm_barang" type="text" name="nama_barang" class="form-control">
-                            @error('nama_barang')<p class="text-danger">{{ $message }}</p> @enderror
-                        </div>
                         
                         <div class="form-group">
-                            <label for="jn_barang">Jenis Barang</label> <br>
+                            <label for="jn_barang">Jenis Aset</label> <br>
                             <select name="id_jenis_barang" id="jn_barang" class="form-control">
                                 <option value="">Pilih</option>
                                 @foreach($jenis_brg as $jbg)
@@ -51,7 +52,7 @@
                             </script>
                         </div>
                         <div class="mb-3">
-                            <label for="">Detail Barang</label>
+                            <label for="">Detail Aset</label>
                             <textarea id="editor1" name="detail">
                                 {{ old('detail') }}
                             </textarea>
