@@ -57,7 +57,7 @@
                             </td>
                             <td class="text-center">{{ \Carbon\Carbon::parse($pmj->created_at)->locale('id')->isoFormat('dddd, D MMMM Y') }}</td>
                             <td>
-                                <a href="/user/peminjaman/detail-peminjaman/{{ $pmj->id_barang }}" class="btn btn-md btn-success"> <i class="fas fa-eye"></i></a> 
+                                <a href="/user/peminjaman/detail-peminjaman/{{ $pmj->serial_number }}" class="btn btn-md btn-success"> <i class="fas fa-eye"></i></a> 
                             </td>
                             <td>
                                 @if($pmj->confirmed === 0)

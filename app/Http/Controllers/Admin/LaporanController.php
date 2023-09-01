@@ -40,7 +40,7 @@ class LaporanController extends Controller
                             ->whereBetween('peminjaman.created_at', [$from, $to])
                             ->join('pengembalian','pengembalian.no_antrian','=','peminjaman.no_antrian')
                             ->join('users','users.nip','=','peminjaman.nip')
-                            ->join('barang','barang.id_barang','=','peminjaman.id_barang')
+                            ->join('barang','barang.serial_number','=','peminjaman.serial_number')
                             ->select('users.name','barang.nama_barang','barang.serial_number','barang.nomor_model','barang.detail','peminjaman.*','pengembalian.status_pengembalian')
                             ->get();
                 // Extract data ke PDF
@@ -54,7 +54,7 @@ class LaporanController extends Controller
                 $pengembalian = \DB::table('pengembalian')
                             ->whereBetween('pengembalian.created_at', [$from, $to])
                             ->join('users','users.nip','=','pengembalian.nip')
-                            ->join('barang','barang.id_barang','=','pengembalian.id_barang')
+                            ->join('barang','barang.serial_number','=','pengembalian.serial_number')
                             ->select('users.name','barang.nama_barang','barang.serial_number','barang.nomor_model','barang.detail','pengembalian.*')
                             ->get(); 
                 // Extract data ke PDF
@@ -65,7 +65,7 @@ class LaporanController extends Controller
                 $check_kondisi = \DB::table('check_kondisi')
                             ->whereBetween('check_kondisi.created_at', [$from, $to])
                             ->join('users','users.nip','=','check_kondisi.nip')
-                            ->join('barang','barang.id_barang','=','check_kondisi.id_barang')
+                            ->join('barang','barang.serial_number','=','check_kondisi.serial_number')
                             ->select('users.name','barang.nama_barang','barang.serial_number','barang.nomor_model','barang.detail','check_kondisi.*')
                             ->get();
                 // Extract data ke PDF
@@ -76,7 +76,7 @@ class LaporanController extends Controller
                 $histories = \DB::table('history')
                             ->whereBetween('history.created_at', [$from_2, $to_2])
                             ->join('users','users.nip','=','history.nip')
-                            ->join('barang','barang.id_barang','=','history.id_barang')
+                            ->join('barang','barang.serial_number','=','history.serial_number')
                             ->join('jenis_barang','jenis_barang.id_jenis_barang','=','barang.id_jenis_barang')
                             ->join('check_kondisi','check_kondisi.no_antrian','=','history.no_antrian')
                             ->select('users.name','barang.nama_barang','barang.nomor_model','barang.detail','jenis_barang.jenis_barang','barang.serial_number','history.*','check_kondisi.kondisi_barang')
@@ -108,7 +108,7 @@ class LaporanController extends Controller
     {
         $peminjaman = \DB::table('peminjaman')
                             ->join('users','users.nip','=','peminjaman.nip')
-                            ->join('barang','barang.id_barang','=','peminjaman.id_barang')
+                            ->join('barang','barang.serial_number','=','peminjaman.serial_number')
                             ->select('users.name','barang.nama_barang','barang.serial_number','peminjaman.*')
                             ->get();
         // Extract data ke PDF
@@ -137,7 +137,7 @@ class LaporanController extends Controller
     {
         $pengembalian = \DB::table('pengembalian')
                             ->join('users','users.nip','=','pengembalian.nip')
-                            ->join('barang','barang.id_barang','=','pengembalian.id_barang')
+                            ->join('barang','barang.serial_number','=','pengembalian.serial_number')
                             ->select('users.name','barang.nama_barang','barang.serial_number','pengembalian.*')
                             ->get(); 
         // Extract data ke PDF
@@ -166,7 +166,7 @@ class LaporanController extends Controller
     {
         $check_kondisi = \DB::table('check_kondisi')
                             ->join('users','users.nip','=','check_kondisi.nip')
-                            ->join('barang','barang.id_barang','=','check_kondisi.id_barang')
+                            ->join('barang','barang.serial_number','=','check_kondisi.serial_number')
                             ->select('users.name','barang.nama_barang','barang.serial_number','check_kondisi.*')
                             ->get();
         // Extract data ke PDF
@@ -195,7 +195,7 @@ class LaporanController extends Controller
     {
         $check_kondisi = \DB::table('history')
                             ->join('users','users.nip','=','history.nip')
-                            ->join('barang','barang.id_barang','=','history.id_barang')
+                            ->join('barang','barang.serial_number','=','history.serial_number')
                             ->select('users.name','barang.nama_barang','barang.serial_number','history.*')
                             ->get();
         // Extract data ke PDF

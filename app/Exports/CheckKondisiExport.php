@@ -21,7 +21,7 @@ class CheckKondisiExport implements FromView
         $check_kondisi = \DB::table('check_kondisi')
                             ->whereBetween('check_kondisi.created_at', [$this->from, $this->to])
                             ->join('users','users.nip','=','check_kondisi.nip')
-                            ->join('barang','barang.id_barang','=','check_kondisi.id_barang')
+                            ->join('barang','barang.serial_number','=','check_kondisi.serial_number')
                             ->select('users.name','barang.nama_barang','barang.nomor_model','barang.detail','barang.serial_number','check_kondisi.*')
                             ->get();
 

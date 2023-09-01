@@ -18,8 +18,8 @@
                             <label>Barang</label> <br>
                                 <input type="text" value="{{ $barang->nama_barang }} ({{ $barang->serial_number}}) - {{ strip_tags(htmlspecialchars_decode($barang->detail)) }}" 
                                 class="form-control" readonly>
-                                <input type="hidden" value="{{ $barang->id_barang }}" name="id_barang">
-                            @error('id_barang')<p class="text-danger">{{ $message }}</p>@enderror
+                                <input type="hidden" value="{{ $barang->serial_number }}" name="serial_number">
+                            @error('serial_number')<p class="text-danger">{{ $message }}</p>@enderror
                         </div>
                         <div class="row">
                             <div class="col-2">

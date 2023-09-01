@@ -23,7 +23,7 @@ class PeminjamanController extends Controller
                         ->where('peminjaman.nip', Auth::user()->nip)
                         ->orderByDesc('id_peminjaman')
                         ->join('users', 'users.nip', '=', 'peminjaman.nip')
-                        ->join('barang', 'barang.id_barang', '=', 'peminjaman.id_barang')
+                        ->join('barang', 'barang.serial_number', '=', 'peminjaman.serial_number')
                         ->join('jenis_barang', 'jenis_barang.id_jenis_barang', '=', 'barang.id_jenis_barang')
                         ->select('users.name', 'barang.nama_barang', 'barang.serial_number', 'barang.nomor_model', 'barang.detail', 'peminjaman.*', 'jenis_barang.*')
                         ->paginate(10);
@@ -60,7 +60,7 @@ class PeminjamanController extends Controller
         // Jika status_barang 1 artinya barang ready atau dapat dipinjam
         $barang = \DB::table('barang')
                         ->where('status_barang', 1)
-                        ->where('id_barang', $id)
+                        ->where('serial_number', $id)
                         ->first();
 
         // Halaman tambah peminjaman di resources/views/pages/app/user/peminjaman/create
@@ -71,7 +71,7 @@ class PeminjamanController extends Controller
     public function store(Request $req)
     {
         $this->validate($req,[
-            'id_barang' => 'required', 
+            'serial_number' => 'required', 
             'angka' => 'required', 
             'jangka_pinjam' => 'required', 
             'created_at' => 'required', 
@@ -90,7 +90,7 @@ class PeminjamanController extends Controller
         // Menambahkan data pada table peminjaman
         $peminjaman = \DB::table('peminjaman')->insert([
             'nip' => Auth::user()->nip,
-            'id_barang' => $req->id_barang,
+            'serial_number' => $req->serial_number,
             'no_antrian' => $no_antrian,
             'durasi_peminjaman' => $total_hari,
             'status_peminjaman' => 'Diproses',
@@ -102,7 +102,7 @@ class PeminjamanController extends Controller
 
         $pengembalian = \DB::table('pengembalian')->insert([
             'nip' => Auth::user()->nip,
-            'id_barang' => $req->id_barang,
+            'serial_number' => $req->serial_number,
             'no_antrian' => $no_antrian,
             'status_pengembalian' => 'Proses Pengembalian',
             'confirmed' => 0,
@@ -114,7 +114,7 @@ class PeminjamanController extends Controller
         $check_kondisi = \DB::table('check_kondisi')
                             ->insert([
                                 'nip' => Auth::user()->nip,
-                                'id_barang' => $req->id_barang,
+                                'serial_number' => $req->serial_number,
                                 'no_antrian' => $no_antrian,
                                 'kondisi_barang' => '-',
                                 'created_at' => date('Y-m-d', strtotime(now())),
@@ -122,7 +122,7 @@ class PeminjamanController extends Controller
                             ]);
                             
         $barang = \DB::table('barang')
-                        ->where('id_barang', $req->id_barang)
+                        ->where('serial_number', $req->serial_number)
                         ->join('jenis_barang','jenis_barang.id_jenis_barang','=','barang.id_jenis_barang')
                         ->select('barang.*','jenis_barang.*')
                         ->first();
@@ -130,7 +130,7 @@ class PeminjamanController extends Controller
                         // Membuat Data History 
         $history = \DB::table('history')->insert([
             'nip' => Auth::user()->nip,
-            'id_barang' => $req->id_barang,
+            'serial_number' => $req->serial_number,
             'no_antrian' => $no_antrian,
             'status' => 'Diproses',
             'pesan' => 'Anda telah mengajukan peminjaman '.$barang->jenis_barang.' '.$barang->nama_barang.'('.$barang->serial_number.')',
@@ -160,7 +160,7 @@ class PeminjamanController extends Controller
     public function detail_peminjaman($id_peminjaman){
         $menu = 'Detail Peminjam';
         $barang = \DB::table('barang')
-                        ->where('id_barang', $id_peminjaman)
+                        ->where('serial_number', $id_peminjaman)
                         ->join('jenis_barang', 'jenis_barang.id_jenis_barang', '=', 'barang.id_jenis_barang')
                         ->select('barang.*', 'jenis_barang.jenis_barang')
                         ->first();

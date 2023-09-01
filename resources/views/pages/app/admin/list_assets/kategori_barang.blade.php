@@ -32,13 +32,13 @@
                                 </a>
                             </td>
                             <td class="text-center">
-                                <a href="/admin/{{ $brg->jenis_barang }}/edit/{{ $brg->id_barang }}" class="btn btn-success"><i class="fas fa-edit"></i></a>
+                                <a href="/admin/{{ $brg->jenis_barang }}/edit/{{ $brg->serial_number }}" class="btn btn-success"><i class="fas fa-edit"></i></a>
                             </td>
                             <td class="text-center">
-                                <a href="/admin/list-asset/detail/{{ $brg->id_barang}}" class="btn btn-primary"><i class="fas fa-eye"></i></a>
+                                <a href="/admin/list-asset/detail/{{ $brg->serial_number}}" class="btn btn-primary"><i class="fas fa-eye"></i></a>
                             </td>
                             <td class="text-center">
-                                <a onclick="return confirm('Apakah anda yakin ingin menghapus aset ini?')" href="/admin/{{ $brg->jenis_barang }}/hapus/{{  $brg->id_barang }}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                                <a onclick="return confirm('Apakah anda yakin ingin menghapus aset ini?')" href="/admin/{{ $brg->jenis_barang }}/hapus/{{  $brg->serial_number }}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
                             </td>
                             <th style="display: none"></th> 
                         </tr>

@@ -21,7 +21,7 @@ class PengembalianExport implements FromView
         $pengembalian = \DB::table('pengembalian')
                             ->whereBetween('pengembalian.created_at', [$this->from, $this->to])
                             ->join('users','users.nip','=','pengembalian.nip')
-                            ->join('barang','barang.id_barang','=','pengembalian.id_barang')
+                            ->join('barang','barang.serial_number','=','pengembalian.serial_number')
                             ->select('users.name','barang.nama_barang','barang.nomor_model','barang.detail','barang.serial_number','pengembalian.*')
                             ->get();
 

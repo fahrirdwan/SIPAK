@@ -19,7 +19,7 @@ class CheckKondisiController extends Controller
         $check_kondisi = \DB::table('check_kondisi')
                             ->where('softDelete', 0)
                             ->join('users','users.nip','=','check_kondisi.nip')
-                            ->join('barang','barang.id_barang','=','check_kondisi.id_barang')
+                            ->join('barang','barang.serial_number','=','check_kondisi.serial_number')
                             ->select('users.name','barang.nama_barang','barang.nomor_model','barang.serial_number','check_kondisi.*')
                             ->paginate(8);
         // Halaman check kondisi di resources/views/pages/app/admin/check_kondisi/index
@@ -33,7 +33,7 @@ class CheckKondisiController extends Controller
         $check = \DB::table('check_kondisi')
                     ->where(['id_check_kondisi' => $id_check_kondisi])
                     ->join('users','users.nip','=','check_kondisi.nip')
-                    ->join('barang','barang.id_barang','=','check_kondisi.id_barang')
+                    ->join('barang','barang.serial_number','=','check_kondisi.serial_number')
                     ->select('users.name','barang.nama_barang','barang.serial_number','check_kondisi.*')
                     ->first();
         // Halaman perbarui check kondisi di resources/views/pages/app/admin/check_kondisi/index
@@ -50,7 +50,7 @@ class CheckKondisiController extends Controller
         $check = \DB::table('check_kondisi')
                     ->where('id_check_kondisi', $id_check_kondisi)
                     ->join('users','users.nip','=','check_kondisi.nip')
-                    ->join('barang','barang.id_barang','=','check_kondisi.id_barang')
+                    ->join('barang','barang.serial_number','=','check_kondisi.serial_number')
                     ->select('users.name','barang.nama_barang','check_kondisi.*')
                     ->first();
                     
@@ -59,7 +59,7 @@ class CheckKondisiController extends Controller
                             ->where('id_check_kondisi', $id_check_kondisi)
                             ->update([
                                 'nip' => $check->nip,
-                                'id_barang' => $check->id_barang,
+                                'serial_number' => $check->serial_number,
                                 'kondisi_barang' => $req->kondisi_barang,
                                 'updated_at' => date('d F Y')
                             ]);
@@ -88,7 +88,7 @@ class CheckKondisiController extends Controller
         $pengembalian = \DB::table('pengembalian')
                         ->orderByDesc('id_pengembalian')
                         ->join('users', 'users.nip', '=', 'pengembalian.nip')
-                        ->join('barang', 'barang.id_barang', '=', 'pengembalian.id_barang')
+                        ->join('barang', 'barang.serial_number', '=', 'pengembalian.serial_number')
                         ->join('jenis_barang', 'jenis_barang.id_jenis_barang', '=', 'barang.id_jenis_barang')
                         ->select('users.name','users.nip', 'users.email', 'users.jabatan', 'users.phone_number', 'users.picture', 'barang.nama_barang', 'barang.gambar', 'barang.serial_number', 'barang.detail', 'jenis_barang.jenis_barang', 'pengembalian.*')
                         ->first();

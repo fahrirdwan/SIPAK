@@ -25,7 +25,7 @@ class CreatePeminjamanTable extends Migration
             $table->string('created_at', 25)->nullable();
             $table->string('updated_at', 25)->nullable();
 
-            // Foreign Key = users.id_user, barang.id_barang
+            // Foreign Key = users.id_user, barang.serial_number
             $table->foreign('nip')->references('nip')->on('users')->onDelete('cascade');
             $table->foreign('serial_number')->references('serial_number')->on('barang')->onDelete('cascade');
         });

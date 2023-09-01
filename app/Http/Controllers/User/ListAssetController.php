@@ -20,7 +20,7 @@ class ListAssetController extends Controller
          */
         $barang = \DB::table('barang')
                         ->where(['jenis_barang' => $jenis_barang, 'status_barang' => 1])
-                        ->orderByDesc('id_barang')
+                        ->orderByDesc('serial_number')
                         ->join('jenis_barang', 'jenis_barang.id_jenis_barang', '=', 'barang.id_jenis_barang')
                         ->get();
                         
@@ -31,11 +31,11 @@ class ListAssetController extends Controller
         // Halaman kategori barang di resources/views/pages/app/user/list_assets/kategori_barang
         return view('pages.app.user.list_assets.kategori_barang', compact('menu','barang', 'jenis_brg', 'jenis_bg'));
     }
-    public function detail($id_barang)
+    public function detail($serial_number)
     {
         $menu = 'Detail Peminjam';
         $barang = \DB::table('barang')
-                        ->where('id_barang', $id_barang)
+                        ->where('serial_number', $serial_number)
                         ->join('jenis_barang', 'jenis_barang.id_jenis_barang', '=', 'barang.id_jenis_barang')
                         ->select('barang.*', 'jenis_barang.jenis_barang')
                         ->first();

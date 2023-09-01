@@ -20,7 +20,7 @@ class HistoryController extends Controller
         $history = \DB::table('history')
                         ->where(['nip' => Auth::user()->nip])
                         ->orderByDesc('id_history')
-                        ->join('barang','barang.id_barang','=','history.id_barang')
+                        ->join('barang','barang.serial_number','=','history.serial_number')
                         ->select('history.*','barang.gambar')
                         ->paginate(4);
 

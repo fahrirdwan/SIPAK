@@ -17,13 +17,13 @@
                         </div>
                         <div class="form-group">
                             <label>Barang</label> <br>
-                            <select class="form-control" name="id_barang">
-                                <option value="{{ $peminjaman->id_barang }}">{{ $peminjaman->nama_barang }}</option>
+                            <select class="form-control" name="serial_number">
+                                <option value="{{ $peminjaman->serial_number }}">{{ $peminjaman->nama_barang }}</option>
                                 @foreach($barang as $brg)
-                                <option value="{{ $brg->id_barang }}">{{ $brg->nama_barang }}</option>
+                                <option value="{{ $brg->serial_number }}">{{ $brg->nama_barang }}</option>
                                 @endforeach
                             </select>
-                            @error('id_barang')<p class="text-danger">{{ $message }}</p>@enderror
+                            @error('serial_number')<p class="text-danger">{{ $message }}</p>@enderror
                         </div>
                         <div class="form-group">
                             <label>Durasi Peminjaman</label> <br>

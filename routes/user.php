@@ -30,7 +30,7 @@ Route::middleware('isUser')->group(function(){
         Route::post('/peminjaman/tambah-data', [PeminjamanController::class, 'store']);
         Route::get('/peminjaman/show', [PeminjamanController::class, 'show']);
         Route::get('/peminjaman/detail-peminjaman/{id_peminjaman}', [PeminjamanController::class, 'detail_peminjaman']);
-        Route::delete('/peminjaman/{id_barang}', [PeminjamanController::class, 'destroy']);
+        Route::delete('/peminjaman/{serial_number}', [PeminjamanController::class, 'destroy']);
         Route::post('/kembalikan-barang/{id_peminjaman}', [PengembalianController::class, 'store']);
 
         // Pengembalian
@@ -54,6 +54,6 @@ Route::middleware('isUser')->group(function(){
                 
         // Kategori Asset
         Route::get('/{jenis_barang}', [ListAssetController::class, 'kategori_barang']);
-        Route::get('/list-asset/detail/{id_barang}', [ListAssetController::class, 'detail']);
+        Route::get('/list-asset/detail/{serial_number}', [ListAssetController::class, 'detail']);
     });
 });

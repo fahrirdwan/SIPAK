@@ -8,7 +8,7 @@
         <div class="col-lg-12">
             <div class="card shadow p-2">
                 <div class="card-body">
-                    <form action="/admin/list-asset/edit-data/{{ $barang->id_barang }}" method="POST" enctype="multipart/form-data">
+                    <form action="/admin/list-asset/edit-data/{{ $barang->serial_number }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
                             <label for="no_model">Model</label> <br>

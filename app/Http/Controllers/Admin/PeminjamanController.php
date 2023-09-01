@@ -24,7 +24,7 @@ class PeminjamanController extends Controller
                         ->where('peminjaman.softDelete', 0)
                         ->orderBy('created_at')
                         ->join('users', 'users.nip', '=', 'peminjaman.nip')
-                        ->join('barang', 'barang.id_barang', '=', 'peminjaman.id_barang')
+                        ->join('barang', 'barang.serial_number', '=', 'peminjaman.serial_number')
                         ->join('pengembalian', 'pengembalian.no_antrian', '=', 'peminjaman.no_antrian')
                         ->select('users.name', 'barang.nama_barang', 'barang.serial_number','barang.nomor_model','barang.detail','barang.status_barang', 'peminjaman.*','pengembalian.status_pengembalian')
                         ->get();
@@ -52,7 +52,7 @@ class PeminjamanController extends Controller
         $peminjaman = \DB::table('peminjaman')
                         ->orderByDesc('id_peminjaman')
                         ->join('users', 'users.nip', '=', 'peminjaman.nip')
-                        ->join('barang', 'barang.id_barang', '=', 'peminjaman.id_barang')
+                        ->join('barang', 'barang.serial_number', '=', 'peminjaman.serial_number')
                         ->join('jenis_barang', 'jenis_barang.id_jenis_barang', '=', 'barang.id_jenis_barang')
                         ->select('users.name','users.nip', 'users.email', 'users.jabatan', 'users.phone_number', 'users.picture', 'barang.nama_barang', 'barang.gambar','barang.detail', 'barang.nomor_model','barang.serial_number','jenis_barang.jenis_barang', 'peminjaman.*')
                         ->first();
@@ -89,12 +89,12 @@ class PeminjamanController extends Controller
          * Artinya barang telah dipinjam dan
          * tidak dapat dipinjam oleh user
          */
-        $status_barang = \DB::table('barang')->where('id_barang', $peminjaman->id_barang)->update([
+        $status_barang = \DB::table('barang')->where('serial_number', $peminjaman->serial_number)->update([
             'status_barang' => 0
         ]);
 
         $barang = \DB::table('barang')
-                        ->where('id_barang', $peminjaman->id_barang)
+                        ->where('serial_number', $peminjaman->serial_number)
                         ->join('jenis_barang','jenis_barang.id_jenis_barang','=','barang.id_jenis_barang')
                         ->select('barang.*','jenis_barang.*')
                         ->first();
@@ -102,7 +102,7 @@ class PeminjamanController extends Controller
         // Membuat Data History 
         $history = \DB::table('history')->where('no_antrian', $peminjaman->no_antrian)->update([
             'nip' => $peminjaman->nip,
-            'id_barang' => $peminjaman->id_barang,
+            'serial_number' => $peminjaman->serial_number,
             'status' => 'Dipinjam',
             'pesan' => 'Peminjaman '.$barang->jenis_barang.' '.$barang->nama_barang.'('.$barang->serial_number.')'.' anda telah disetujui',
             'updated_at' => date('d F Y')
@@ -129,12 +129,12 @@ class PeminjamanController extends Controller
     {
         /**
          * Validasi form input :
-         * id_user, id_barang, durasi_peminjaman
+         * id_user, serial_number, durasi_peminjaman
          * status_peminjaman, created_at
          */
         $this->validate($req, [
             'nip' => 'required',
-            'id_barang' => 'required',
+            'serial_number' => 'required',
             'angka' => 'required',
             'jangka_pinjam' => 'required',
             'created_at' => 'required',
@@ -153,7 +153,7 @@ class PeminjamanController extends Controller
         // Menambahkan peminjaman barang
         $peminjaman = \DB::table('peminjaman')->insert([
             'nip' => $req->nip,
-            'id_barang' => $req->id_barang,
+            'serial_number' => $req->serial_number,
             'no_antrian' => $no_antrian,
             'durasi_peminjaman' => $total_hari,
             'status_peminjaman' => 'Diproses',
@@ -165,7 +165,7 @@ class PeminjamanController extends Controller
 
         $pengembalian = \DB::table('pengembalian')->insert([
             'nip' => $req->nip,
-            'id_barang' => $req->id_barang,
+            'serial_number' => $req->serial_number,
             'no_antrian' => $no_antrian,
             'status_pengembalian' => 'Proses Pengembalian',
             'confirmed' => 0,
@@ -174,7 +174,7 @@ class PeminjamanController extends Controller
         ]);
 
         $barang = \DB::table('barang')
-                        ->where('id_barang', $req->id_barang)
+                        ->where('serial_number', $req->serial_number)
                         ->join('jenis_barang','jenis_barang.id_jenis_barang','=','barang.id_jenis_barang')
                         ->select('barang.*','jenis_barang.*')
                         ->first();
@@ -182,7 +182,7 @@ class PeminjamanController extends Controller
         // Membuat Data History 
         $history = \DB::table('history')->insert([
             'nip' => $req->nip,
-            'id_barang' => $req->id_barang,
+            'serial_number' => $req->serial_number,
             'no_antrian' => $no_antrian,
             'status' => 'Diproses',
             'pesan' => 'Anda telah mengajukan peminjaman '.$barang->jenis_barang.' '.$barang->nama_barang.'('.$barang->serial_number.')',
@@ -196,7 +196,7 @@ class PeminjamanController extends Controller
         $check_kondisi = \DB::table('check_kondisi')
                             ->insert([
                                 'nip' => $req->nip,
-                                'id_barang' => $req->id_barang,
+                                'serial_number' => $req->serial_number,
                                 'no_antrian' => $no_antrian,
                                 'kondisi_barang' => '-',
                                 'softDelete' => 1,  
@@ -217,7 +217,7 @@ class PeminjamanController extends Controller
         $peminjaman = \DB::table('peminjaman')
                             ->where('id_peminjaman', $id_peminjaman)
                             ->join('users','users.nip','=','peminjaman.nip')
-                            ->join('barang','barang.id_barang','=','peminjaman.id_barang')
+                            ->join('barang','barang.serial_number','=','peminjaman.serial_number')
                             ->select('users.name','barang.nama_barang','peminjaman.*')
                             ->first();
         // Halaman edit peminjaman di resources/views/pages/app/admin/peminjaman/edit_data
@@ -229,12 +229,12 @@ class PeminjamanController extends Controller
     {
         /**
          * Validasi form input :
-         * id_user, id_barang, durasi_peminjaman
+         * id_user, serial_number, durasi_peminjaman
          * status_peminjaman, created_at,
          * updated_at
          */
         $this->validate($req, [
-            'id_barang' => 'required',
+            'serial_number' => 'required',
             'durasi_peminjaman' => 'required',
             'status_peminjaman' => 'required',
             'created_at' => 'required',
@@ -248,7 +248,7 @@ class PeminjamanController extends Controller
         $peminjaman = \DB::table('peminjaman')
                         ->where('id_peminjaman', $id_peminjaman)
                         ->update([
-                            'id_barang' => $req->id_barang,
+                            'serial_number' => $req->serial_number,
                             'durasi_peminjaman' => $req->durasi_peminjaman,
                             'created_at' => date('Y-m-d', strtotime($req->created_at)),
                             'status_peminjaman' => $req->status_peminjaman,
@@ -257,11 +257,11 @@ class PeminjamanController extends Controller
         // Memperbarui atau menambahkan history
         $history = \DB::table('history')->updateOrInsert([
             'nip' => $dikembalikan->nip,
-            'id_barang' => $req->id_barang,
+            'serial_number' => $req->serial_number,
         ],
         [
             'nip' => $dikembalikan->nip,
-            'id_barang' => $req->id_barang,
+            'serial_number' => $req->serial_number,
             'status' => $req->status_peminjaman,
             'tgl_peminjaman' => date('d F Y', strtotime($req->created_at)),
             'tgl_pengembalian' => '-'
@@ -272,7 +272,7 @@ class PeminjamanController extends Controller
             $pengembalian = \DB::table('pengembalian')
                     ->insert([
                         'nip' => $dikembalikan->nip,
-                        'id_barang' => $req->id_barang,
+                        'serial_number' => $req->serial_number,
                         'status_pengembalian' => $req->status_peminjaman,
                         'created_at' => date('Y-m-d', strtotime($req->created_at)),
                         'updated_at' => date('Y-m-d', strtotime($req->updated_at)),
@@ -282,7 +282,7 @@ class PeminjamanController extends Controller
             $check_kondisi = \DB::table('check_kondisi')
                     ->insert([
                         'nip' => $dikembalikan->nip,
-                        'id_barang' => $req->id_barang,
+                        'serial_number' => $req->serial_number,
                         'kondisi_barang' => '-',
                         'created_at' => date('d F Y', strtotime($req->created_at)),
                         'updated_at' => date('d F Y', strtotime($req->updated_at)),
@@ -291,11 +291,11 @@ class PeminjamanController extends Controller
             // Memperbarui atau menambahkan history
             $history = \DB::table('history')->updateOrInsert([
                 'nip' => $dikembalikan->nip,
-                'id_barang' => $req->id_barang,
+                'serial_number' => $req->serial_number,
             ],
             [
                 'nip' => $dikembalikan->nip,
-                'id_barang' => $req->id_barang,
+                'serial_number' => $req->serial_number,
                 'status' => $req->status_peminjaman,
                 'tgl_peminjaman' => date('d F Y', strtotime($req->created_at)),
                 'tgl_pengembalian' => date('d F Y', strtotime($req->updated_at))
@@ -310,7 +310,7 @@ class PeminjamanController extends Controller
         $peminjaman = \DB::table('peminjaman')
                         ->orderByDesc('id_peminjaman')
                         ->join('users', 'users.nip', '=', 'peminjaman.nip')
-                        ->join('barang', 'barang.id_barang', '=', 'peminjaman.id_barang')
+                        ->join('barang', 'barang.serial_number', '=', 'peminjaman.serial_number')
                         ->join('jenis_barang', 'jenis_barang.id_jenis_barang', '=', 'barang.id_jenis_barang')
                         ->join('pengembalian', 'pengembalian.no_antrian', '=', 'peminjaman.no_antrian')
                         ->select('users.name','users.nip', 'users.email', 'users.jabatan', 'users.phone_number', 'users.picture', 'barang.nama_barang', 'barang.gambar','barang.detail', 'barang.nomor_model','barang.serial_number','jenis_barang.jenis_barang', 'pengembalian.created_at as tgl_pengembalian', 'peminjaman.*')

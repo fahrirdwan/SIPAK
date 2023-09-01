@@ -21,7 +21,7 @@ class PeminjamanExport implements FromView
         $peminjaman = \DB::table('peminjaman')
                             ->whereBetween('peminjaman.created_at', [$this->from, $this->to])
                             ->join('users','users.nip','=','peminjaman.nip')
-                            ->join('barang','barang.id_barang','=','peminjaman.id_barang')
+                            ->join('barang','barang.serial_number','=','peminjaman.serial_number')
                             ->join('pengembalian','pengembalian.no_antrian','=','peminjaman.no_antrian')
                             ->select('users.name','barang.nama_barang','barang.nomor_model','barang.detail','barang.serial_number','peminjaman.*','pengembalian.status_pengembalian')
                             ->get();

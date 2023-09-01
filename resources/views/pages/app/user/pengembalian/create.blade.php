@@ -16,13 +16,13 @@
                         </div>
                         <div class="form-group">
                             <label>Barang</label> <br>
-                            <select class="form-control" name="id_barang">
+                            <select class="form-control" name="serial_number">
                                 <option value="">Pilih</option>
                                 @foreach($barang as $brg)
-                                <option value="{{ $brg->id_barang }}">{{ $brg->nama_barang }} ({{ $brg->serial_number }})</option>
+                                <option value="{{ $brg->serial_number }}">{{ $brg->nama_barang }} ({{ $brg->serial_number }})</option>
                                 @endforeach
                             </select>
-                            @error('id_barang')<p class="text-danger">{{ $message }}</p>@enderror
+                            @error('serial_number')<p class="text-danger">{{ $message }}</p>@enderror
                         </div>
                         <div class="form-group">
                             <label>Tanggal Pengembalian</label> <br>

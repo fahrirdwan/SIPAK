@@ -32,7 +32,7 @@
                                 </a>
                             </td>
                             <td class="text-center">
-                                <a href="/user/list-asset/detail/{{ $brg->id_barang}}" class="btn btn-primary"><i class="fas fa-eye"></i></a>
+                                <a href="/user/list-asset/detail/{{ $brg->serial_number}}" class="btn btn-primary"><i class="fas fa-eye"></i></a>
                             </td>
                         </tr>
                         @endforeach

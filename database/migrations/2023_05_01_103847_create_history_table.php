@@ -26,7 +26,7 @@ class CreateHistoryTable extends Migration
             $table->string('created_at', 25);
             $table->string('updated_at', 25);
 
-            // Foreign Key = users.id_user, barang.id_barang
+            // Foreign Key = users.id_user, barang.serial_number
             $table->foreign('nip')->references('nip')->on('users');
             $table->foreign('serial_number')->references('serial_number')->on('barang')->onDelate('cascade');
         });

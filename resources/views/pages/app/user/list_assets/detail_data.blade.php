@@ -45,7 +45,7 @@
                         </thead>
                         
                    </table>
-                   <a href="/user/peminjaman/tambah-data/{{ $barang->id_barang }}" class="btn btn-md btn-success mt-3 float-right">Pinjam Aset</a>
+                   <a href="/user/peminjaman/tambah-data/{{ $barang->serial_number }}" class="btn btn-md btn-success mt-3 float-right">Pinjam Aset</a>
                 </div>
             </div>
         </div>

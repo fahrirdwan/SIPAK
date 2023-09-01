@@ -17,7 +17,6 @@ class ListAssetController extends Controller
     {
         $menu = 'List Asset';
         $barang = \DB::table('barang')
-                        ->orderByDesc('id_barang')
                         ->join('jenis_barang', 'jenis_barang.id_jenis_barang', '=', 'barang.id_jenis_barang')
                         ->get();
         // Halaman list aset di resources/views/pages/app/admin/list_assets/index
@@ -28,11 +27,11 @@ class ListAssetController extends Controller
      * 'GET' | Method untuk menampilkan halaman detail list aset
      * berdasarkan id
      */
-    public function detail($id_barang)
+    public function detail($serial_number)
     {
         $menu = 'Detail Peminjam';
         $barang = \DB::table('barang')
-                        ->where('id_barang', $id_barang)
+                        ->where('serial_number', $serial_number)
                         ->join('jenis_barang', 'jenis_barang.id_jenis_barang', '=', 'barang.id_jenis_barang')
                         ->select('barang.*', 'jenis_barang.jenis_barang')
                         ->first();
@@ -89,19 +88,19 @@ class ListAssetController extends Controller
     }
 
     // 'GET' | Method untuk menghapus barang berdasarkan id
-    public function hapus($id_barang)
+    public function hapus($serial_number)
     {
-        $destroy = \DB::table('barang')->where('id_barang', $id_barang)->delete();
+        $destroy = \DB::table('barang')->where('serial_number', $serial_number)->delete();
         // Redirect ke halaman yang sama dan menampilkan notifikasi
         return redirect()->back()->withSuccess('Berhasil Hapus Data');
     }
 
     // 'GET' | Method untuk menampilkan halaman edit barang berdasarkan id
-    public function edit($id_barang)
+    public function edit($serial_number)
     {
         $menu = 'Edit Data';
         $barang = \DB::table('barang')
-                        ->where('id_barang', $id_barang)
+                        ->where('serial_number', $serial_number)
                         ->join('jenis_barang', 'jenis_barang.id_jenis_barang', '=', 'barang.id_jenis_barang')
                         ->first();
         $jenis_barang = \DB::table('jenis_barang')->get();
@@ -110,7 +109,7 @@ class ListAssetController extends Controller
     }
     
     // 'POST' | Method untuk memperbarui barang berdasarkan id
-    public function edit_data(Request $req, $id_barang)
+    public function edit_data(Request $req, $serial_number)
     {
         /**
          * Validasi form input :
@@ -133,7 +132,7 @@ class ListAssetController extends Controller
             // Simpan foto ke folder public/img/aset
             $imanip->save('img/aset/'. $file->getClientOriginalName());
             // Memperbarui barang
-            $update = \DB::table('barang')->where('id_barang', $id_barang)
+            $update = \DB::table('barang')->where('serial_number', $serial_number)
                         ->update([
                             'nomor_model' => $req->nomor_model,  
                             'nama_barang' => $req->nama_barang,  
@@ -144,7 +143,7 @@ class ListAssetController extends Controller
                     ]);
         }else{
             // Jika admin tidak memperbarui foto barang, jalankan kode
-            $update = \DB::table('barang')->where('id_barang', $id_barang)
+            $update = \DB::table('barang')->where('serial_number', $serial_number)
                         ->update([
                             'nomor_model' => $req->nomor_model,  
                             'nama_barang' => $req->nama_barang,  
@@ -167,7 +166,6 @@ class ListAssetController extends Controller
         $jenis_bg = $jenis_barang;
         $barang = \DB::table('barang')
                         ->where('jenis_barang', $jenis_barang)
-                        ->orderByDesc('id_barang')
                         ->join('jenis_barang', 'jenis_barang.id_jenis_barang', '=', 'barang.id_jenis_barang')
                         ->get();
         $jenis_brg = \DB::table('jenis_barang')
@@ -213,25 +211,25 @@ class ListAssetController extends Controller
         return redirect('/admin/'. $jenis_barang)->withSuccess('berhasil menambah data');
     }
 
-    public function hapus_kategori($jenis_barang, $id_barang)
+    public function hapus_kategori($jenis_barang, $serial_number)
     {
-        \DB::table('barang')->where('id_barang', $id_barang)->delete();
+        \DB::table('barang')->where('serial_number', $serial_number)->delete();
         return redirect('/admin/'. $jenis_barang)->withSuccess('Berhasil Hapus Data');
     }
     
-    public function edit_kategori($jenis_barang, $id_barang)
+    public function edit_kategori($jenis_barang, $serial_number)
     {
         $menu = 'Edit Data';
         $jenis_bg = $jenis_barang;
         $barang = \DB::table('barang')
-                        ->where('id_barang', $id_barang)
+                        ->where('serial_number', $serial_number)
                         ->join('jenis_barang', 'jenis_barang.id_jenis_barang', '=', 'barang.id_jenis_barang')  
                         ->first();
         $jenis_barang = \DB::table('jenis_barang')->get();
 
         return view('pages.app.admin.list_assets.edit_data_kategori', compact('menu','barang', 'jenis_barang', 'jenis_bg'));
     }
-    public function edit_data_kategori(Request $req, $jenis_barang, $id_barang)
+    public function edit_data_kategori(Request $req, $jenis_barang, $serial_number)
     {
         $this->validate($req, [
            'nomor_model' => 'required',  
@@ -244,7 +242,7 @@ class ListAssetController extends Controller
         {
             $file = $req->file('gambar');
             $file ->move('img/aset/', $file->getClientOriginalName());
-            \DB::table('barang')->where('id_barang', $id_barang)
+            \DB::table('barang')->where('serial_number', $serial_number)
             ->update([
                 'nomor_model' => $req->nomor_model,  
                 'serial_number' => $req->serial_number,  
@@ -255,7 +253,7 @@ class ListAssetController extends Controller
                 'updated_at' => now(),
             ]);
         }else{
-            \DB::table('barang')->where('id_barang', $id_barang)
+            \DB::table('barang')->where('serial_number', $serial_number)
             ->update([
                 'nomor_model' => $req->nomor_model,  
                 'serial_number' => $req->nomor_model,  

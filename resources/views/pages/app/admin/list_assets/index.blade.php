@@ -34,13 +34,13 @@
                                 </a>
                             </td>
                             <td>
-                                <a href="/admin/list-asset/edit/{{ $brg->id_barang }}" class="btn btn-success"><i class="fas fa-edit"></i></a>
+                                <a href="/admin/list-asset/edit/{{ $brg->serial_number }}" class="btn btn-success"><i class="fas fa-edit"></i></a>
                             </td>
                             <td>
-                                <a href="/admin/list-asset/detail/{{ $brg->id_barang }}" class="btn btn-primary"><i class="fas fa-eye"></i></a>
+                                <a href="/admin/list-asset/detail/{{ $brg->serial_number }}" class="btn btn-primary"><i class="fas fa-eye"></i></a>
                             </td>
                             <td>
-                                <a onclick="return confirm('Apakah anda yakin ingin menghapus daya ini?')" href="/admin/list-asset/hapus/{{ $brg->id_barang }}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                                <a onclick="return confirm('Apakah anda yakin ingin menghapus daya ini?')" href="/admin/list-asset/hapus/{{ $brg->serial_number }}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
                             </td>
                             <th style="display: none"></th> 
                         </tr>

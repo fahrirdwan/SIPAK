@@ -30,18 +30,18 @@ Route::middleware('isAdmin')->group(function(){
         Route::get('/list-asset', [ListAssetController::class, 'index']);
         Route::get('/list-asset/tambah-data', [ListAssetController::class, 'tambah_data']);
         Route::post('/list-asset/tambah-data', [ListAssetController::class, 'proses_tambah']);
-        Route::get('/list-asset/detail/{id_barang}', [ListAssetController::class, 'detail']);
-        Route::get('/list-asset/edit/{id_barang}', [ListAssetController::class, 'edit']);
-        Route::post('/list-asset/edit-data/{id_barang}', [ListAssetController::class, 'edit_data']);
-        Route::get('/list-asset/hapus/{id_barang}', [ListAssetController::class, 'hapus']);
+        Route::get('/list-asset/detail/{serial_number}', [ListAssetController::class, 'detail']);
+        Route::get('/list-asset/edit/{serial_number}', [ListAssetController::class, 'edit']);
+        Route::post('/list-asset/edit-data/{serial_number}', [ListAssetController::class, 'edit_data']);
+        Route::get('/list-asset/hapus/{serial_number}', [ListAssetController::class, 'hapus']);
         
         // Jenis Barang
         Route::get('/jenis_barang', [JenisBarangController::class, 'jenis_barang']);
         Route::get('/jenis-barang/tambah-data', [JenisBarangController::class, 'tambah_data']);
         Route::post('/jenis-barang/tambah-data', [JenisBarangController::class, 'proses_tambah']);
         Route::get('/jenis-barang/hapus/{id_jenis_barang}', [JenisBarangController::class, 'hapus']);
-        Route::get('/jenis-barang/edit/{id_barang}', [JenisBarangController::class, 'edit']);
-        Route::post('/jenis-barang/edit-data/{id_barang}', [JenisBarangController::class, 'edit_data']);
+        Route::get('/jenis-barang/edit/{serial_number}', [JenisBarangController::class, 'edit']);
+        Route::post('/jenis-barang/edit-data/{serial_number}', [JenisBarangController::class, 'edit_data']);
         
         // Peminjaman
         Route::get('/peminjaman', [PeminjamanController::class, 'index']);
@@ -116,8 +116,8 @@ Route::middleware('isAdmin')->group(function(){
         Route::get('/{jenis_barang}', [ListAssetController::class, 'kategori_barang']);
         Route::get('/{jenis_barang}/tambah-data', [ListAssetController::class, 'tambah_data_kategori']);
         Route::post('/{jenis_barang}/tambah-data', [ListAssetController::class, 'proses_tambah_data_kategori']);
-        Route::get('/{jenis_barang}/hapus/{id_barang}', [ListAssetController::class, 'hapus_kategori']);
-        Route::get('/{jenis_barang}/edit/{id_barang}', [ListAssetController::class, 'edit_kategori']);
-        Route::post('/{jenis_barang}/edit-data/{id_barang}', [ListAssetController::class, 'edit_data_kategori']);
+        Route::get('/{jenis_barang}/hapus/{serial_number}', [ListAssetController::class, 'hapus_kategori']);
+        Route::get('/{jenis_barang}/edit/{serial_number}', [ListAssetController::class, 'edit_kategori']);
+        Route::post('/{jenis_barang}/edit-data/{serial_number}', [ListAssetController::class, 'edit_data_kategori']);
     });
 });

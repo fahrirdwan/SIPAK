@@ -14,7 +14,7 @@ class PembatalanController extends Controller
                             ->where('peminjaman.softDelete', 1)
                             ->orderBy('created_at')
                             ->join('users', 'users.nip', '=', 'peminjaman.nip')
-                            ->join('barang', 'barang.id_barang', '=', 'peminjaman.id_barang')
+                            ->join('barang', 'barang.serial_number', '=', 'peminjaman.serial_number')
                             ->join('pengembalian', 'pengembalian.no_antrian', '=', 'peminjaman.no_antrian')
                             ->select('users.name', 'barang.nama_barang', 'barang.serial_number','barang.nomor_model','barang.detail','barang.status_barang', 'peminjaman.*','pengembalian.status_pengembalian')
                             ->get();
@@ -22,7 +22,7 @@ class PembatalanController extends Controller
                             ->where('pengembalian.softDelete', 1)
                             ->orderBy('created_at')
                             ->join('users', 'users.nip', '=', 'pengembalian.nip')
-                            ->join('barang', 'barang.id_barang', '=', 'pengembalian.id_barang')
+                            ->join('barang', 'barang.serial_number', '=', 'pengembalian.serial_number')
                             ->join('peminjaman', 'peminjaman.no_antrian', '=', 'pengembalian.no_antrian')
                             ->join('check_kondisi', 'check_kondisi.no_antrian', '=', 'peminjaman.no_antrian')
                             ->select('users.name', 'barang.nama_barang', 'barang.serial_number','barang.nomor_model','barang.detail','barang.status_barang', 'pengembalian.*','peminjaman.status_peminjaman','check_kondisi.kondisi_barang')
@@ -58,12 +58,12 @@ class PembatalanController extends Controller
          * Artinya barang ready dan
          * dapat dipinjam oleh user
          */
-        $status_barang = \DB::table('barang')->where('id_barang', $peminjaman->id_barang)->update([
+        $status_barang = \DB::table('barang')->where('serial_number', $peminjaman->serial_number)->update([
             'status_barang' => 1
         ]);
 
         $barang = \DB::table('barang')
-                        ->where('id_barang', $peminjaman->id_barang)
+                        ->where('serial_number', $peminjaman->serial_number)
                         ->join('jenis_barang','jenis_barang.id_jenis_barang','=','barang.id_jenis_barang')
                         ->select('barang.*','jenis_barang.*')
                         ->first();
@@ -71,7 +71,7 @@ class PembatalanController extends Controller
         // Membuat Data History 
         $history = \DB::table('history')->where('no_antrian', $peminjaman->no_antrian)->update([
             'nip' => $peminjaman->nip,
-            'id_barang' => $peminjaman->id_barang,
+            'serial_number' => $peminjaman->serial_number,
             'status' => 'Diproses',
             'pesan' => 'Anda telah mengajukan peminjaman '.$barang->jenis_barang.' '.$barang->nama_barang.'('.$barang->serial_number.')',
             'updated_at' => date('d F Y')
@@ -109,12 +109,12 @@ class PembatalanController extends Controller
          * Artinya barang telah dipinjam dan
          * tidak dapat dipinjam oleh user
          */
-        $status_barang = \DB::table('barang')->where('id_barang', $barang->id_barang)->update([
+        $status_barang = \DB::table('barang')->where('serial_number', $barang->serial_number)->update([
             'status_barang' => 0
         ]);
 
         $get_barang = \DB::table('barang')
-                        ->where('id_barang', $barang->id_barang)
+                        ->where('serial_number', $barang->serial_number)
                         ->join('jenis_barang','jenis_barang.id_jenis_barang','=','barang.id_jenis_barang')
                         ->select('barang.*','jenis_barang.*')
                         ->first();
@@ -122,7 +122,7 @@ class PembatalanController extends Controller
         // Membuat Data History 
         $history = \DB::table('history')->where('no_antrian', $barang->no_antrian)->update([
             'nip' => $barang->nip,
-            'id_barang' => $barang->id_barang,
+            'serial_number' => $barang->serial_number,
             'status' => 'Proses Pengembalian',
             'pesan' => 'Anda telah mengajukan pengembalian '.$get_barang->jenis_barang.' '.$get_barang->nama_barang.'('.$get_barang->serial_number.')',
             'updated_at' => date('d F Y')

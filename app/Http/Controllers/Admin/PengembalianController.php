@@ -23,7 +23,7 @@ class PengembalianController extends Controller
                         ->orderBy('created_at')
                         ->where('pengembalian.softDelete', 0)
                         ->join('users', 'users.nip', '=', 'pengembalian.nip')
-                        ->join('barang', 'barang.id_barang', '=', 'pengembalian.id_barang')
+                        ->join('barang', 'barang.serial_number', '=', 'pengembalian.serial_number')
                         ->join('peminjaman','peminjaman.no_antrian','=','pengembalian.no_antrian')
                         ->select('users.name', 'barang.nama_barang', 'barang.serial_number','barang.nomor_model','barang.detail', 'pengembalian.*','peminjaman.status_peminjaman')
                         ->get(); 
@@ -38,7 +38,7 @@ class PengembalianController extends Controller
         $pengembalian = \DB::table('pengembalian')
                         ->orderByDesc('id_pengembalian')
                         ->join('users', 'users.nip', '=', 'pengembalian.nip')
-                        ->join('barang', 'barang.id_barang', '=', 'pengembalian.id_barang')
+                        ->join('barang', 'barang.serial_number', '=', 'pengembalian.serial_number')
                         ->join('jenis_barang', 'jenis_barang.id_jenis_barang', '=', 'barang.id_jenis_barang')
                         ->select('users.name','users.nip', 'users.email', 'users.jabatan', 'users.phone_number', 'users.picture', 'barang.nama_barang', 'barang.gambar', 'barang.serial_number', 'barang.detail', 'jenis_barang.jenis_barang', 'pengembalian.*')
                         ->first();
@@ -83,12 +83,12 @@ class PengembalianController extends Controller
          * Artinya barang ready dan
          * dapat dipinjam oleh user
          */
-        $status_barang = \DB::table('barang')->where('id_barang', $barang->id_barang)->update([
+        $status_barang = \DB::table('barang')->where('serial_number', $barang->serial_number)->update([
             'status_barang' => 1
         ]);
 
         $get_barang = \DB::table('barang')
-                        ->where('id_barang', $barang->id_barang)
+                        ->where('serial_number', $barang->serial_number)
                         ->join('jenis_barang','jenis_barang.id_jenis_barang','=','barang.id_jenis_barang')
                         ->select('barang.*','jenis_barang.*')
                         ->first();
@@ -96,7 +96,7 @@ class PengembalianController extends Controller
         // Membuat Data History 
         $history = \DB::table('history')->where('no_antrian', $barang->no_antrian)->update([
             'nip' => $barang->nip,
-            'id_barang' => $barang->id_barang,
+            'serial_number' => $barang->serial_number,
             'status' => 'Dikembalikan',
             'pesan' => 'Pengembalian '.$get_barang->jenis_barang.' '.$get_barang->nama_barang.'('.$get_barang->serial_number.')'.' anda telah disetujui',
             'updated_at' => date('d F Y')
@@ -118,7 +118,7 @@ class PengembalianController extends Controller
         $pengembalian = \DB::table('pengembalian')
                         ->where('id_pengembalian', $id_pengembalian)
                         ->join('users', 'users.nip', '=', 'pengembalian.nip')
-                        ->join('barang', 'barang.id_barang', '=', 'pengembalian.id_barang')
+                        ->join('barang', 'barang.serial_number', '=', 'pengembalian.serial_number')
                         ->join('jenis_barang', 'jenis_barang.id_jenis_barang', '=', 'barang.id_jenis_barang')
                         ->join('check_kondisi', 'check_kondisi.no_antrian', '=', 'pengembalian.no_antrian')
                         ->select('users.name','users.nip', 'users.email', 'users.jabatan', 'users.phone_number', 'users.picture', 'barang.nama_barang', 'barang.gambar','barang.detail', 'barang.nomor_model','barang.serial_number','jenis_barang.jenis_barang', 'pengembalian.*', 'check_kondisi.kondisi_barang')

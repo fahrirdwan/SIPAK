@@ -23,7 +23,7 @@ class PengembalianController extends Controller
                             ->where('pengembalian.nip', Auth::user()->nip)
                             ->orderByDesc('id_pengembalian')
                             ->join('users', 'users.nip', '=', 'pengembalian.nip')
-                            ->join('barang', 'barang.id_barang', '=', 'pengembalian.id_barang')
+                            ->join('barang', 'barang.serial_number', '=', 'pengembalian.serial_number')
                             ->join('jenis_barang', 'jenis_barang.id_jenis_barang','=','barang.id_jenis_barang')
                             ->select('users.name', 'barang.nama_barang', 'barang.serial_number', 'barang.nomor_model', 'barang.detail', 'pengembalian.*','jenis_barang.*')
                             ->paginate(10);
@@ -46,7 +46,7 @@ class PengembalianController extends Controller
         $pengembalian = \DB::table('pengembalian')
                         ->orderByDesc('id_pengembalian')
                         ->join('users', 'users.nip', '=', 'pengembalian.nip')
-                        ->join('barang', 'barang.id_barang', '=', 'pengembalian.id_barang')
+                        ->join('barang', 'barang.serial_number', '=', 'pengembalian.serial_number')
                         ->select('users.name', 'barang.nama_barang', 'barang.serial_number', 'pengembalian.*')
                         ->where('serial_number','like','%'.$cari.'%')
                         ->orwhere('name','like','%'.$cari.'%')
@@ -74,7 +74,7 @@ class PengembalianController extends Controller
         // Jika confirmed 1 artinya barang telah terpinjam
         $barang = \DB::table('peminjaman')
                         ->where(['confirmed' => 1, 'nip' => Auth::user()->nip])
-                        ->join('barang','barang.id_barang','=','peminjaman.id_barang')
+                        ->join('barang','barang.serial_number','=','peminjaman.serial_number')
                         ->select('peminjaman.*','barang.nama_barang','barang.serial_number')
                         ->get();
         // Halaman tambah pengembalian di resources/views/pages/app/user/pengembalian/create
@@ -85,7 +85,7 @@ class PengembalianController extends Controller
     public function store(Request $req)
     {
         $this->validate($req,[
-            'id_barang' => 'required', 
+            'serial_number' => 'required', 
             'created_at' => 'required', 
         ]);
         
@@ -93,10 +93,10 @@ class PengembalianController extends Controller
         $pengembalian = \DB::table('pengembalian')
                             ->updateOrInsert([
                                 'nip' => Auth::user()->nip,
-                                'id_barang' => $req->id_barang,
+                                'serial_number' => $req->serial_number,
                             ],[
                                 'nip' => Auth::user()->nip,
-                                'id_barang' => $req->id_barang,
+                                'serial_number' => $req->serial_number,
                                 'status_pengembalian' => 'Diproses',
                                 'confirmed' => 0,
                                 'created_at' => date('d F Y'),
@@ -105,7 +105,7 @@ class PengembalianController extends Controller
         
         $get_history = \DB::table('history')->where([
             'nip' => Auth::user()->nip,
-            'id_barang' => $req->id_barang
+            'serial_number' => $req->serial_number
         ])->first();
         
         if($get_history->status === 'Dikembalikan'){
@@ -116,7 +116,7 @@ class PengembalianController extends Controller
              */
             $history = \DB::table('history')->insert([
                 'nip' => Auth::user()->nip,
-                'id_barang' => $req->id_barang,
+                'serial_number' => $req->serial_number,
                 'status' => 'Diproses',
                 'tgl_peminjaman' => '-',
                 'tgl_pengembalian' => '-'
@@ -126,11 +126,11 @@ class PengembalianController extends Controller
             // Memperbarui atau membuat history berdasarkan barang yang dikembalikan
             $history = \DB::table('history')->updateOrInsert([
                 'nip' => Auth::user()->nip,
-                'id_barang' => $req->id_barang,
+                'serial_number' => $req->serial_number,
             ],
             [
                 'nip' => Auth::user()->nip,
-                'id_barang' => $req->id_barang,
+                'serial_number' => $req->serial_number,
                 'status' => 'Proses Pengembalian',
                 'tgl_pengembalian' => date('d F Y')
             ]);
@@ -140,7 +140,7 @@ class PengembalianController extends Controller
         $check_kondisi = \DB::table('check_kondisi')
                             ->insert([
                                 'nip' => Auth::user()->nip,
-                                'id_barang' => $req->id_barang,
+                                'serial_number' => $req->serial_number,
                                 'kondisi_barang' => '-',
                                 'created_at' => date('Y-m-d', strtotime(now())),
                                 'updated_at' => date('Y-m-d', strtotime(now())),
