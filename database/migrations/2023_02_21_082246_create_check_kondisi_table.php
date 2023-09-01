@@ -16,7 +16,7 @@ class CreateCheckKondisiTable extends Migration
         Schema::create('check_kondisi', function (Blueprint $table) {
             $table->increments('id_check_kondisi');
             $table->unsignedInteger('nip');
-            $table->unsignedInteger('id_barang');
+            $table->string('serial_number', 128)->index();
             $table->string('no_antrian', 25);
             $table->string('kondisi_barang');
             $table->tinyInteger('softDelete')->nullable();
@@ -25,7 +25,7 @@ class CreateCheckKondisiTable extends Migration
 
             // Foreign Key = users.id_user, barang.id_user
             $table->foreign('nip')->references('nip')->on('users')->onDelete('cascade');
-            $table->foreign('id_barang')->references('id_barang')->on('barang')->onDelete('cascade');
+            $table->foreign('serial_number')->references('serial_number')->on('barang')->onDelete('cascade');
         });
     }
 

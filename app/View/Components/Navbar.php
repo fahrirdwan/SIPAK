@@ -29,7 +29,7 @@ class Navbar extends Component
                                 'status' => 'Dipinjam',
                                 'softDelete' => NULL
                             ])
-                            ->join('barang','barang.id_barang','=','history.id_barang')
+                            ->join('barang','barang.serial_number','=','history.serial_number')
                             ->join('jenis_barang','jenis_barang.id_jenis_barang','=','barang.id_jenis_barang')
                             ->select('history.*','barang.nama_barang','jenis_barang.jenis_barang')
                             ->limit(4)->get();

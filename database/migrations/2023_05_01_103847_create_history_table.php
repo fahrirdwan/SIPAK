@@ -16,7 +16,7 @@ class CreateHistoryTable extends Migration
         Schema::create('history', function (Blueprint $table) {
             $table->increments('id_history');
             $table->unsignedInteger('nip');
-            $table->unsignedInteger('id_barang');
+            $table->string('serial_number', 128)->index();
             $table->string('no_antrian', 25);
             $table->string('pesan', 128);
             $table->string('status', 25);
@@ -28,7 +28,7 @@ class CreateHistoryTable extends Migration
 
             // Foreign Key = users.id_user, barang.id_barang
             $table->foreign('nip')->references('nip')->on('users');
-            $table->foreign('id_barang')->references('id_barang')->on('barang')->onDelate('cascade');
+            $table->foreign('serial_number')->references('serial_number')->on('barang')->onDelate('cascade');
         });
     }
 
