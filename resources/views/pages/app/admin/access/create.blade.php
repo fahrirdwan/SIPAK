@@ -40,7 +40,7 @@
                             <input type="date" name="tgl_lahir" class="form-control" value="{{ old('tgl_lahir') }}">
                         </div>
                         <div class="form-group">
-                            <label>Jabatan</label> <br>
+                            <label>Divisi</label> <br>
                             <input type="text" name="jabatan" class="form-control" value="{{ old('jabatan') }}">
                         </div>
                         <div class="form-group">

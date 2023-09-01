@@ -55,7 +55,7 @@ class LaporanController extends Controller
                             ->whereBetween('pengembalian.created_at', [$from, $to])
                             ->join('users','users.nip','=','pengembalian.nip')
                             ->join('barang','barang.id_barang','=','pengembalian.id_barang')
-                            ->select('users.name','barang.nama_barang','barang.serial_number','pengembalian.*')
+                            ->select('users.name','barang.nama_barang','barang.serial_number','barang.nomor_model','barang.detail','pengembalian.*')
                             ->get(); 
                 // Extract data ke PDF
                 $pdf = \PDF::loadview('pdf.pengembalian', compact('pengembalian'));
@@ -66,7 +66,7 @@ class LaporanController extends Controller
                             ->whereBetween('check_kondisi.created_at', [$from, $to])
                             ->join('users','users.nip','=','check_kondisi.nip')
                             ->join('barang','barang.id_barang','=','check_kondisi.id_barang')
-                            ->select('users.name','barang.nama_barang','barang.serial_number','check_kondisi.*')
+                            ->select('users.name','barang.nama_barang','barang.serial_number','barang.nomor_model','barang.detail','check_kondisi.*')
                             ->get();
                 // Extract data ke PDF
                 $pdf = \PDF::loadview('pdf.check_kondisi', compact('check_kondisi'));

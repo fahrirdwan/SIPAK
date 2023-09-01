@@ -85,8 +85,8 @@ class UserAccessController extends Controller
         $this->validate($req,[
             'name'=>'required',
             'id_role'=>'required',
-            'tgl_lahir'=>'required',
-            'phone_number'=>'required',
+            // 'tgl_lahir'=>'required',
+            // 'phone_number'=>'required',
         ]);
 
         // Memperbarui user

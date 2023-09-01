@@ -16,12 +16,12 @@
                         </div>
                         <div class="form-group">
                             <label>Barang</label> <br>
-                            <select class="form-control" name="id_barang">
-                                <option value="">Pilih</option>
+                            <select class="form-control js-example-basic-multiple" name="id_barang" multiple="multiple">
+                                <option></option>
                                 @foreach($barang as $brg)
-                                <option value="{{ $brg->id_barang }}">{{ $brg->nama_barang }} ({{ $brg->serial_number}}) - {!! $brg->detail !!}</option>
+                                <option value="{{ $brg->id_barang }}">{{ $brg->nama_barang }} {{ $brg->nomor_model }} ({{ $brg->serial_number}}) - {!! $brg->detail !!}</option>
                                 @endforeach
-                            </select>
+                              </select>
                             @error('id_barang')<p class="text-danger">{{ $message }}</p>@enderror
                         </div>
                         <div class="row">
